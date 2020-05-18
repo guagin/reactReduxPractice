@@ -7,6 +7,12 @@ import { connectRouter, RouterState } from 'connected-react-router';
 
 import { history } from 'utils/history';
 import { InjectedReducersType } from 'utils/types/injector-typings';
+import { SelectSubredditAction, RedditPostActions } from './reddit/action';
+import {
+  selectSubredditReducer,
+  postsBySubredditReducer,
+} from './reddit/reducer';
+import { PostBySubreddit } from './reddit/state';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -15,6 +21,16 @@ export function createReducer(injectedReducers: InjectedReducersType = {}) {
   const rootReducer = combineReducers({
     ...injectedReducers,
     router: connectRouter(history) as Reducer<RouterState, AnyAction>,
+    selectSubredditReducer: selectSubredditReducer as Reducer<
+      string,
+      SelectSubredditAction
+    >,
+    postsBySubredditReducer: postsBySubredditReducer as Reducer<
+      {
+        [index: string]: PostBySubreddit;
+      },
+      RedditPostActions
+    >,
   });
 
   return rootReducer;
