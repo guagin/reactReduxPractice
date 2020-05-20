@@ -1,7 +1,16 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useDispatch } from 'react-redux';
+import { FetchPosts } from 'store/reddit/action';
+import { useTypedSelector } from 'store/reducers';
+import { RedditListPage } from 'app/components/RedditListPage';
+
+const dispatch = useDispatch();
+dispatch(FetchPosts('reactjs'));
 
 export function HomePage() {
+  const subreddit = useTypedSelector(state => state.selectSubredditReducer);
+
   return (
     <>
       <Helmet>
@@ -9,6 +18,10 @@ export function HomePage() {
         <meta name="description" content="A Boilerplate application homepage" />
       </Helmet>
       <span>HomePage container</span>
+      <span>subreddit: {subreddit}</span>
+      <div>
+        <RedditListPage subreddit={subreddit} />
+      </div>
     </>
   );
 }

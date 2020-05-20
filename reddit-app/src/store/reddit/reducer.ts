@@ -18,7 +18,7 @@ const postsReducer: Reducer<PostBySubreddit, RedditPostActions> = (
   state = {
     isFetching: false,
     didInvalidate: false,
-    lastUpdated: new Date(),
+    lastUpdated: Date.now(),
     items: [],
   },
   action,

@@ -8,11 +8,14 @@ export interface RedditState {
 export interface PostBySubreddit {
   isFetching: boolean;
   didInvalidate: boolean;
-  lastUpdated: Date;
+  lastUpdated: number;
   items: Item[];
 }
 
 export interface Item {
   id: number;
-  title: string;
+  data: {
+    title: string;
+    selftext: string;
+  };
 }

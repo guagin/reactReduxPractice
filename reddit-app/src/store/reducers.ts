@@ -13,6 +13,7 @@ import {
   postsBySubredditReducer,
 } from './reddit/reducer';
 import { PostBySubreddit } from './reddit/state';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -35,3 +36,6 @@ export function createReducer(injectedReducers: InjectedReducersType = {}) {
 
   return rootReducer;
 }
+
+export type RootState = ReturnType<ReturnType<typeof createReducer>>;
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

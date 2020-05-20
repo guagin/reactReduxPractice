@@ -76,6 +76,8 @@ export const FetchPosts: ActionCreator<ThunkAction<
         response => response.json(),
         error => console.log(`An error occurred.`, error),
       )
-      .then(json => dispatch(ReceivePostsActionCreator(subreddit, json)));
+      .then(json =>
+        dispatch(ReceivePostsActionCreator(subreddit, json.data.children)),
+      );
   };
 };
