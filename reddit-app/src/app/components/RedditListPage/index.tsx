@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
-import {
-  CircularProgress,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  List,
-  TextField,
-} from '@material-ui/core';
-import SubjectIcon from '@material-ui/icons/SubjectOutlined';
+import { CircularProgress, TextField } from '@material-ui/core';
+
 import { useTypedSelector } from 'store/reducers';
 import { useDispatch } from 'react-redux';
 import { FetchPosts, SelectSubredditActionCreator } from 'store/reddit/action';
+import { PostList } from './PostsList';
 
 export function RedditListPage(input: { subreddit: string }) {
   const { subreddit } = input;
   const dispatch = useDispatch();
 
-  const posts = useTypedSelector(state => state.postsBySubredditReducer)[
+  const post = useTypedSelector(state => state.postsBySubredditReducer)[
     subreddit
   ];
 
@@ -31,24 +25,8 @@ export function RedditListPage(input: { subreddit: string }) {
     dispatch(FetchPosts(subredditInput));
   };
 
-  const postList = () => {
-    if (posts) {
-      const list = posts.items.map(item => (
-        <ListItem>
-          <ListItemIcon>
-            <SubjectIcon />
-          </ListItemIcon>
-          <ListItemText>{item.data.title}</ListItemText>
-        </ListItem>
-      ));
-
-      return <List>{list}</List>;
-    }
-    return <></>;
-  };
-
   const loading = () => {
-    if (posts && posts.isFetching) {
+    if (post && post.isFetching) {
       return <CircularProgress />;
     }
     return <></>;
@@ -56,7 +34,6 @@ export function RedditListPage(input: { subreddit: string }) {
 
   return (
     <>
-      {/* <form noValidate autoComplete="off"> */}
       <TextField
         id="subreddit"
         value={subredditInput}
@@ -69,9 +46,8 @@ export function RedditListPage(input: { subreddit: string }) {
           if (event.key === 'Enter') handleOnEnter();
         }}
       />
-      {/* </form> */}
       {loading()}
-      {postList()}
+      {PostList(post)}
     </>
   );
 }

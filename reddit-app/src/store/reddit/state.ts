@@ -17,5 +17,6 @@ export interface Item {
   data: {
     title: string;
     selftext: string;
+    selftext_html: string;
   };
 }
