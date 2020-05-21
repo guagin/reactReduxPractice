@@ -26,9 +26,9 @@ export function RedditListPage(input: { subreddit: string }) {
     setSubredditInput(value);
   };
 
-  const handleSubrreditBlur = (value: string) => {
-    dispatch(SelectSubredditActionCreator(value));
-    dispatch(FetchPosts(value));
+  const handleOnEnter = () => {
+    dispatch(SelectSubredditActionCreator(subredditInput));
+    dispatch(FetchPosts(subredditInput));
   };
 
   const postList = () => {
@@ -65,9 +65,8 @@ export function RedditListPage(input: { subreddit: string }) {
         onChange={event => {
           handleSubredditChange(event.target.value);
         }}
-        onBlur={event => {
-          console.log('WTF:' + event.target.value);
-          handleSubrreditBlur(event.target.value);
+        onKeyPress={event => {
+          if (event.key === 'Enter') handleOnEnter();
         }}
       />
       {/* </form> */}
